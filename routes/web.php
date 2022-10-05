@@ -13,15 +13,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Route::get('/', function () {
-    return "Seja Bem vindo";
-});*/
 
-Route::get('/',[\App\Http\Controllers\PrincipalController::class, 'principal']);
+Route::get('/',[\App\Http\Controllers\PrincipalController::class, 'principal'])->name('site.index');
+Route::get('/sobrenos', [\App\Http\Controllers\SobreNosController::class, 'sobreNos'])->name('site.sobrenos');
+Route::get('/contato', [\App\Http\Controllers\ContatoController::class, 'contato'])->name('site.contato');
+Route::get('/login', function() { return 'Login';})->name('site.login');
 
-Route::get('/sobrenos', [\App\Http\Controllers\SobreNosController::class, 'sobreNos']);
+Route::prefix('/app')->group(function(){
+    Route::get('/clientes', function() { return 'Cliente';})->name('app.clientes');
+    Route::get('/fornecedores', function() { return 'Fornecedores';})->name('app.fornecedores');
+    Route::get('/produtos', function() { return 'Produtos';})->name('app.produtos');
+});
 
-Route::get('/contato', [\App\Http\Controllers\ContatoController::class, 'contato']);
+ 
+/*Route::get('/rota1', function() {
+    echo 'Rota 1';
+})->name('site.rota1');
+
+Route::get('/rota2', function() {
+    return redirect()->route('site.rota1'); 
+})->name('site.rota2');*/
+
+Route::get('/teste/{p1}/{p2}', [\App\Http\Controllers\TesteController::class, 'teste'])->name('teste');
+ 
+
+Route::fallback(function() {
+    echo 'A rota acessada nao existe. <a href="'.route('site.index').'"> Menu principal</a>';
+});
+
+
+
+
+
+
+
 // nome, categoria, assunto, mensagem
 
 
